@@ -10,10 +10,33 @@
 {% endblock %}
 
 {% block path_wizard %}
-    <div data-ng-cloak="" data-ng-app="PathEditorApp" class="path-editor">
+    <div data-ng-cloak="" class="path-editor">
         {# Path Form (we not directly alter the entity, but work with a JSON structure which stores info before publishing) #}
         <path-edit data-id="{{ _resource.id }}" data-path="{{ _resource.structure | raw | escape }}" data-modified="{{ _resource.modified }}" data-published="{{ _resource.published }}"></path-edit>
 
-        {{ tinymce_init() }}
+        {#{{ tinymce_init() }}#}
     </div>
+{% endblock %}
+
+{% block initModule %}
+    <script>
+        System.import('vendor/claroline/js/translator')
+            .then(function (translator) {
+                window.Translator = translator;
+
+                return System.import('vendor/innovapath/translations');
+            })
+            .then(function () {
+                return System.import('vendor/angular/angular-js');
+            })
+            .then(function () {
+                return System.import('vendor/angular/angular-ui');
+            })
+            .then(function () {
+                return System.import('vendor/innovapath/wizards');
+            })
+            .then(function (module) {
+                module.initEditor();
+            });
+    </script>
 {% endblock %}

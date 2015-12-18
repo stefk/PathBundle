@@ -4,7 +4,7 @@
  * @constructor
  */
 var StepShowCtrl = function StepShowCtrl(step, inheritedResources, PathService, authorization, $sce, UserProgressionService, $filter) {
-    StepBaseCtrl.apply(this, arguments);
+  StepBaseCtrl.apply(this, arguments);
 
     // Store some services
     this.userProgressionService = UserProgressionService;

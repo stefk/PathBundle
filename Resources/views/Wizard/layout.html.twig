@@ -1,42 +1,27 @@
 {% extends "ClarolineCoreBundle:Workspace:layout.html.twig" %}
 
-{% block stylesheets %}
-    {# Claroline CSS #}
-    {{ parent() }}
-
-    {# Path Editor styles #}
-    {% stylesheets debug=false filter='lessphp, cssmin' output='vendor/innovapath/wizards.css'
-        '@InnovaAngularUITreeBundle/Resources/public/css/*'
-        '@InnovaPathBundle/Resources/public/less/wizards.less'
-    %}
-    <link rel="stylesheet" media="screen" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
-
 {% block content %}
-    {% block path_wizard %}{% endblock %}
-{% endblock %}
+    <div id="path-container">
+        {% block path_wizard %}{% endblock %}
+    </div>
 
-{% block javascripts %}
-    {# Claroline JS #}
-    {{ parent() }}
-
-    {# Translations #}
-    <script type="text/javascript" src="{{ url('bazinga_jstranslation_js', { 'domain': 'path_wizards' }) }}"></script>
+    {% javascripts output='vendor/innovapath/translations.js'
+        'js/translations/path_wizards/*.js'
+    %}
+    {% endjavascripts %}
 
     {# Angular JS #}
-    {% javascripts debug=false filter='jsmin' output='vendor/angular/angular-js.js'
+    {% javascripts output='vendor/angular/angular-js.js'
         '@InnovaAngularJSBundle/Resources/public/js/angular.min.js'
         '@InnovaAngularJSBundle/Resources/public/js/angular-sanitize.min.js'
         '@InnovaAngularJSBundle/Resources/public/js/angular-route.min.js'
         '@InnovaAngularJSBundle/Resources/public/js/angular-resource.min.js'
         '@InnovaAngularJSBundle/Resources/public/js/angular-touch.min.js'
     %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
     {# Angular UI #}
-    {% javascripts debug=false filter='jsmin' output='vendor/angular/angular-ui.js'
+    {% javascripts output='vendor/angular/angular-ui.js'
         '@InnovaAngularUIBootstrapBundle/Resources/public/js/*'
         '@InnovaAngularUITreeBundle/Resources/public/js/*'
         '@InnovaAngularUIPageslideBundle/Resources/public/js/*'
@@ -44,10 +29,9 @@
         '@InnovaAngularUITranslationBundle/Resources/public/js/*'
         '@InnovaAngularUIResourcePickerBundle/Resources/public/js/*'
     %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    {% javascripts debug=false filter='jsmin' output='vendor/innovapath/wizards.js'
+    {% javascripts output='vendor/innovapath/wizards.js'
         '@InnovaPathBundle/Resources/public/js/Utils/*'
         '@InnovaPathBundle/Resources/public/js/Utils/Filter/*'
         '@InnovaPathBundle/Resources/public/js/Utils/Service/*'
@@ -90,11 +74,6 @@
         '@InnovaPathBundle/Resources/public/js/Step/Controller/*'
         '@InnovaPathBundle/Resources/public/js/Step/Service/*'
 
-        '@InnovaPathBundle/Resources/public/js/StepConditions/*'
-        '@InnovaPathBundle/Resources/public/js/StepConditions/Controller/*'
-        '@InnovaPathBundle/Resources/public/js/StepConditions/Directive/*'
-        '@InnovaPathBundle/Resources/public/js/StepConditions/Service/*'
-
         '@InnovaPathBundle/Resources/public/js/Resource/*'
         '@InnovaPathBundle/Resources/public/js/Resource/Controller/*'
         '@InnovaPathBundle/Resources/public/js/Resource/Service/*'
@@ -115,8 +94,19 @@
 
         '@InnovaPathBundle/Resources/public/js/wizards.app.js'
     %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+
+
+    {# Should be loaded async #}
+
+    {# Path Editor styles #}
+    {% stylesheets debug=false filter='lessphp, cssmin' output='vendor/innovapath/wizards.css'
+        '@InnovaAngularUITreeBundle/Resources/public/css/*'
+        '@InnovaPathBundle/Resources/public/less/wizards.less'
+    %}
+    <link rel="stylesheet" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
 
     {# Set some vars needed by Angular parts #}
     <script type="text/javascript">
@@ -132,4 +122,6 @@
             {% endfor %}
         };
     </script>
+
+    {% block initModule %}{% endblock %}
 {% endblock %}

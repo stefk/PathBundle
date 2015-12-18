@@ -39,7 +39,7 @@
                  */
                 getForStep : function getForStep(step) {
                     var stepProgression = null;
-                    if (angular.isObject(progression) && angular.isObject(progression[step.resourceId])) {
+                    if (step && angular.isObject(progression) && angular.isObject(progression[step.resourceId])) {
                         stepProgression = progression[step.resourceId];
                     }
 
